@@ -1,0 +1,42 @@
+create database company_db;
+
+use company_db;
+
+create table employees(emp_id int,emp_name varchar(20),salary int,dep_id int,
+hiring_date date,location varchar(20));
+
+create table department(dep_id int,dep_name varchar(20));
+
+insert into employees values(101,"Reshma",25000,3,"2024-06-15","Bangalore"),
+(102,"Mohit",40000,2,"2026-02-15","Pune"),
+(101,"Reshma",25000,3,"2024-06-15","Bangalore"),
+(103,"John",150000,5,"2019-04-03","Bangalore"),
+(104,"Devid",220000,1,"2015-10-10","Mumbai"),
+(105,"Viraj",35000,2,"2026-01-01","Pune"),
+(106,"Kartik",45000,2,"2026-04-01","Nashik"),
+(107,"Ritesh",80000,4,"2022-06-08","Hyderabad"),
+(108,"Meghraj",70000,4,"2024-09-11","Hyderabad"),
+(109,"Rohan",30000,3,"2025-07-07","Nashik"),
+(110,"Radhika",75000,4,"2021-04-01","Mumbai"),
+(111,"Pooja",65000,5,"2025-12-02","Pune");
+
+insert into department values(1,"Manager"),
+(2,"HR"),(3,"Accountant"),(4,"Sales"),(5,"IT");
+
+select d.dep_name ,count(e.emp_id) as Employee_Count from department d left join employees e on d.dep_id = e.dep_id group by d.dep_name;
+
+select max(salary) as second_Highest_Salary from employees where salary < (select max(salary)from employees);
+
+select employees.emp_name ,department.dep_name from employees inner join department on employees.dep_id=department.dep_id;
+
+select employees.emp_name ,department.dep_name from employees left join department on employees.dep_id=department.dep_id;
+
+select group_concat(emp_name),location, count(emp_id) from employees group by location having count(emp_id) >1;
+
+select emp_name , hiring_date from employees where hiring_date >=DATE_SUB("2026-04-01",interval 6 month);
+
+select emp_name, count(*) as count from employees group by emp_name having count(*) >1;
+
+delete from employees where emp_id = 101 limit 1 ;
+
+select * from employees;
